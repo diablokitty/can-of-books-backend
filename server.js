@@ -28,13 +28,16 @@ const PORT = process.env.PORT || 3002;
 
 //ROUTES
 
+// base route
 app.get('/', (request, response) => 
 {
-  response.status(200).send('Meow-mix, please deliver.');
+  response.status(200).send('Meow-mix, meow-mix, please deliver.');
 });
 
+// books endpoint route
 app.get('/books', getBooks);
 
+// call the `getBooks` function in the books.js
 async function getBooks(request, response, next) 
 {
   try 
@@ -51,12 +54,7 @@ async function getBooks(request, response, next)
   }
 }
 
-app.get('/test', (request, response) => {
-
-  response.send('test request received');
-
-});
-
+// catch-all route
 app.get('*', (request, response) => {
 
   response.status(500).send('Oh good Lord, what have you done now?');
@@ -64,7 +62,11 @@ app.get('*', (request, response) => {
 });
 
 //ERROR
-
+app.use((error, request, response) =>
+{
+  console.log(error.message);
+  response.status(500).send(`You're fired, Mr. Squidward: `, error.message);
+});
 
 //LISTEN
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
