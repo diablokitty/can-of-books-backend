@@ -14,9 +14,9 @@ In order to build this app, the user will need to first clone the template Can-O
 This application uses Javascript, NodeJS, Express, Axios, Cors, MongoDB, Mongoose, dotenv [ARE THERE MORE?] and is the back end control for a database of book information. 
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
+8/29/2022 5:45pm - Application is now a functioning server with a GET route to retrieve information from the database.
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+
 
 ## Estimates
 
