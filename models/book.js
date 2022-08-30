@@ -15,3 +15,10 @@ const bookSchema = new Schema({
 
 });
 
+// define the model
+
+// allows our `BookModel` to use `mongoose` methods
+const BookModel = mongoose.model('Book', bookSchema);
+
+module.exports = BookModel;
+
