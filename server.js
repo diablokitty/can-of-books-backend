@@ -25,6 +25,7 @@ mongoose.connect(process.env.DB_URL);
 const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 3002;
+app.use(express.json());
 
 //ROUTES
 
@@ -35,6 +36,11 @@ app.get('/', (request, response) => {
 
 // books endpoint route
 app.get('/books', getBooks);
+app.post('/books', postBooks);
+app.delete('/books/:id', deleteBooks);
+
+
+
 
 // call the `getBooks` function in the books.js
 async function getBooks(request, response, next) {
@@ -46,6 +52,32 @@ async function getBooks(request, response, next) {
     response.status(200).send(results);
   }
   catch (e) {
+
+    next(e);
+  }
+}
+
+async function postBooks(request, response, next) {
+  try {
+    let createdBook = await Book.create(request.body);
+    response.status(200).send(createdBook);
+
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function deleteBooks(request, response, next) {
+  console.log('banana');
+  console.log('request params: ', request.params.id);
+  try {
+    // try to find a book by id (from params) and delete it if it finds it
+    await Book.findByIdAndDelete(request.params.id);
+
+    response.status(200).send('Deleted book');
+  }
+  catch (e) {
+
     next(e);
   }
 }
