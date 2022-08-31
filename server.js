@@ -52,6 +52,7 @@ async function getBooks(request, response, next) {
     response.status(200).send(results);
   }
   catch (e) {
+
     next(e);
   }
 }
@@ -76,6 +77,7 @@ async function deleteBooks(request, response, next) {
     response.status(200).send('Deleted book');
   }
   catch (e) {
+
     next(e);
   }
 }
