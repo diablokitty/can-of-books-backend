@@ -84,6 +84,7 @@ async function deleteBooks(request, response, next) {
     await Book.findByIdAndDelete(request.params.id);
 
     // send back a message to the client to confirm that a the book was actually deleted from the database
+    // NOTE: don't use status `200` here; find a different code that's more appropriate for DELETE
     response.status(200).send('Deleted book');
   }
   catch (e) {
