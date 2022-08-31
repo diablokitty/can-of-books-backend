@@ -30,44 +30,55 @@ app.use(express.json());
 //ROUTES
 
 // base route
-app.get('/', (request, response) => 
-{
+app.get('/', (request, response) => {
   response.status(200).send('Meow-mix, meow-mix, please deliver.');
 });
 
 // books endpoint route
 app.get('/books', getBooks);
 app.post('/books', postBooks);
+app.delete('/books/:id', deleteBooks);
+
+
 
 
 // call the `getBooks` function in the books.js
-async function getBooks(request, response, next) 
-{
-  try 
-  {
+async function getBooks(request, response, next) {
+  try {
     // get book information from the database
     let results = await Book.find();
 
     // send the results of the book search back to the client
     response.status(200).send(results);
   }
-  catch (e)
-  {
+  catch (e) {
     next(e);
   }
 }
-async function postBooks(request, response, next)
-{
-  try{
+
+async function postBooks(request, response, next) {
+  try {
     let createdBook = await Book.create(request.body);
     response.status(200).send(createdBook);
-    
-  }catch(e){
+
+  } catch (e) {
     next(e);
   }
-
 }
 
+async function deleteBooks(request, response, next) {
+  console.log('banana');
+  console.log('request params: ', request.params.id);
+  try {
+    // try to find a book by id (from params) and delete it if it finds it
+    await Book.findByIdAndDelete(request.params.id);
+
+    response.status(200).send('Deleted book');
+  }
+  catch (e) {
+    next(e);
+  }
+}
 
 // catch-all route
 app.get('*', (request, response) => {
@@ -77,8 +88,7 @@ app.get('*', (request, response) => {
 });
 
 //ERROR
-app.use((error, request, response) =>
-{
+app.use((error, request, response) => {
   console.log(error.message);
   response.status(500).send(`You're fired, Mr. Squidward: `, error.message);
 });
