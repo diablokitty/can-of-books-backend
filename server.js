@@ -14,7 +14,7 @@ const Book = require('./models/book.js');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  console.log('Mongoose is connected');
+  console.log('Mongoose is \'goosin\'');
 });
 
 
