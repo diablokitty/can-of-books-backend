@@ -25,6 +25,8 @@ mongoose.connect(process.env.DB_URL);
 const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 3002;
+
+// need this, so that our backend server can read and interpret JSON data from mongoose
 app.use(express.json());
 
 //ROUTES
