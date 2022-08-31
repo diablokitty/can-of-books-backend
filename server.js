@@ -39,6 +39,7 @@ app.get('/books', getBooks);
 app.post('/books', postBooks);
 
 // must pass in `:id` param when making a delete request
+// NOTE: we can just dump the id
 app.delete('/books/:id', deleteBooks);
 
 
