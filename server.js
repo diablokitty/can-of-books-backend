@@ -34,11 +34,12 @@ app.get('/', (request, response) => {
   response.status(200).send('Meow-mix, meow-mix, please deliver.');
 });
 
-// books endpoint route
+// books endpoint routes
 app.get('/books', getBooks);
 app.post('/books', postBooks);
 
 // must pass in `:id` param when making a delete request
+// the `:` means that we're declaring whatever we're writing after `/books` to be a parameter called `id`
 // NOTE: we can just dump the id
 app.delete('/books/:id', deleteBooks);
 
@@ -49,15 +50,15 @@ app.delete('/books/:id', deleteBooks);
 async function getBooks(request, response, next) {
   try {
     // get book information from the database
-    // .find() accepts an object as a parameter to use to search for specific items
+    // MOdel.find() accepts an object as a parameter to use to search for specific items
     // passing in an empty object will return all books
+    // mongoose, not axios, so we don't need to look in .data
     let results = await Book.find({});
 
     // send the results of the book search back to the client
     response.status(200).send(results);
   }
   catch (e) {
-
     next(e);
   }
 }
