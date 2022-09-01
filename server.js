@@ -40,11 +40,46 @@ app.get('/', (request, response) => {
 app.get('/books', getBooks);
 app.post('/books', postBooks);
 
+// must pass in `:id` param when making an update request
+app.put('/books/:id', putBooks);
+
 // must pass in `:id` param when making a delete request
 // the `:` means that we're declaring whatever we're writing after `/books` to be a parameter called `id`
 // NOTE: we can just dump the id
 app.delete('/books/:id', deleteBooks);
 
+/* notes from class 13: Update
+
+  app.put('/books/:id' putBooks);
+
+
+  async function putBooks(request, response, next)
+  {
+    try
+    {
+      // access the `id` in params
+      let id = request.params.id;
+
+      // findByIdAndUpdate() needs 3 arguments:
+      // 1. the id of the record
+      // 2. the updated data object
+      // 3. an `options` object
+
+      // options: overwrite: true is what makes this a PUT request
+      //   - overwrite says to replace the entire `book` record with this one 
+      // PUT is faster for simpler code, because there's less data to process
+      let updatedBook = await Book.findByIdAndUpdate(id, request.body, { new: true, overwrite: true});
+
+      // send the updated Book back to the client
+      response.status(200).send(updatedBook);
+    }
+    catch (e)
+    {
+      next(e);
+    }
+  }
+
+*/
 
 
 // this function find book objects in our database
@@ -78,6 +113,32 @@ async function postBooks(request, response, next) {
     next(e);
   }
 }
+
+async function putBooks(request, response, next)
+  {
+    try
+    {
+      // access the `id` in params
+      let id = request.params.id;
+
+      // findByIdAndUpdate() needs 3 arguments:
+      // 1. the id of the record
+      // 2. the updated data object
+      // 3. an `options` object
+
+      // options: overwrite: true is what makes this a PUT request
+      //   - overwrite says to replace the entire `book` record with this one 
+      // PUT is faster for simpler code, because there's less data to process
+      let updatedBook = await Book.findByIdAndUpdate(id, request.body, { new: true, overwrite: true});
+
+      // send the updated Book back to the client
+      response.status(200).send(updatedBook);
+    }
+    catch (e)
+    {
+      next(e);
+    }
+  }
 
 async function deleteBooks(request, response, next) {
   // log to see what parameters the user passed in
